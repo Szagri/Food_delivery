@@ -104,9 +104,9 @@ const JedzenieScreen = ({route, navigation}) => {
     if(itemId == 1) {
         let listViewRef;
                   const [dataSource, setDataSource] = useState([
-                    { id: 1, title: 'John burg'},
-                    { id: 2, title: 'Bó' },
-                    { id: 3, title: 'MC Donalds' },
+                    { id: 1, title: 'Classic'},
+                    { id: 2, title: 'BBQ Burger' },
+                    { id: 3, title: 'Vege Burger' },
                   ]);
                 const ItemView = ({ item }) => {
                     return (
@@ -149,33 +149,190 @@ const JedzenieScreen = ({route, navigation}) => {
             );
 
     } else if (itemId == 2) {
-    return (
-        <View style = {{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    let listViewRef;
+                      const [dataSource, setDataSource] = useState([
+                        { id: 1, title: 'Jalapeno Burger'},
+                        { id: 2, title: 'Triple Cheese Burger' },
+                        { id: 3, title: 'Spicy Burger' },
+                      ]);
+                    const ItemView = ({ item }) => {
+                        return (
+                          // Flat List Item
+                          <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+                            {item.title.toUpperCase()}
+                          </Text>
+                        );
+                    };
+             const ItemSeparatorView = () => {
+                    return (
+                      // Flat List Item Separator
+                      <View
+                        style={{
+                          height: 0.5,
+                          width: '100%',
+                          backgroundColor: '#C8C8C8',
+                        }}
+                      />
+                    );
+                  };
+                const getItem = (item) => {
+                      // Function for click on an item
+                       navigation.navigate('Jedzenie', {itemId: food.id, name: food.title});
 
-               <Button title = "Wyloguj" onPress = {() => navigation.navigate("Login")} />
-        </View>
+                };
+
+                return (
+                    <SafeAreaView style={{ flex: 1 }}>
+                          <FlatList
+                            data={dataSource}
+                            keyExtractor={(food, index) => index.toString()}
+                            ItemSeparatorComponent={ItemSeparatorView}
+                            renderItem={ItemView}
+                            ref={(ref) => {
+                              listViewRef = ref;
+                            }}
+                          />
+                    </SafeAreaView>
+                );
     );
     } else if (itemId == 3) {
-          return (
-              <View style = {{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          let listViewRef;
+                            const [dataSource, setDataSource] = useState([
+                              { id: 1, title: 'Drwal'},
+                              { id: 2, title: 'McWrap' },
+                              { id: 3, title: 'McFlurry' },
+                            ]);
+                          const ItemView = ({ item }) => {
+                              return (
+                                // Flat List Item
+                                <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+                                  {item.title.toUpperCase()}
+                                </Text>
+                              );
+                          };
+                   const ItemSeparatorView = () => {
+                          return (
+                            // Flat List Item Separator
+                            <View
+                              style={{
+                                height: 0.5,
+                                width: '100%',
+                                backgroundColor: '#C8C8C8',
+                              }}
+                            />
+                          );
+                        };
+                      const getItem = (item) => {
+                            // Function for click on an item
+                             navigation.navigate('Jedzenie', {itemId: food.id, name: food.title});
 
-                     <Button title = "Wyloguj" onPress = {() => navigation.navigate("Login")} />
-              </View>
-          );
+                      };
+
+                      return (
+                          <SafeAreaView style={{ flex: 1 }}>
+                                <FlatList
+                                  data={dataSource}
+                                  keyExtractor={(food, index) => index.toString()}
+                                  ItemSeparatorComponent={ItemSeparatorView}
+                                  renderItem={ItemView}
+                                  ref={(ref) => {
+                                    listViewRef = ref;
+                                  }}
+                                />
+                          </SafeAreaView>
+                      );
    } else if (itemId == 4) {
-         return (
-             <View style = {{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+         let listViewRef;
+                           const [dataSource, setDataSource] = useState([
+                             { id: 1, title: 'Kubełek Classic'},
+                             { id: 2, title: 'BeSmart' },
+                             { id: 3, title: 'Frytki' },
+                           ]);
+                         const ItemView = ({ item }) => {
+                             return (
+                               // Flat List Item
+                               <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+                                 {item.title.toUpperCase()}
+                               </Text>
+                             );
+                         };
+                  const ItemSeparatorView = () => {
+                         return (
+                           // Flat List Item Separator
+                           <View
+                             style={{
+                               height: 0.5,
+                               width: '100%',
+                               backgroundColor: '#C8C8C8',
+                             }}
+                           />
+                         );
+                       };
+                     const getItem = (item) => {
+                           // Function for click on an item
+                            navigation.navigate('Jedzenie', {itemId: food.id, name: food.title});
 
-                    <Button title = "Wyloguj" onPress = {() => navigation.navigate("Login")} />
-             </View>
-         );
+                     };
+
+                     return (
+                         <SafeAreaView style={{ flex: 1 }}>
+                               <FlatList
+                                 data={dataSource}
+                                 keyExtractor={(food, index) => index.toString()}
+                                 ItemSeparatorComponent={ItemSeparatorView}
+                                 renderItem={ItemView}
+                                 ref={(ref) => {
+                                   listViewRef = ref;
+                                 }}
+                               />
+                         </SafeAreaView>
+                     );
    } else if (itemId == 5) {
-         return (
-             <View style = {{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+         let listViewRef;
+                           const [dataSource, setDataSource] = useState([
+                             { id: 1, title: 'Nuggets'},
+                             { id: 2, title: 'Oreo Shake' },
+                             { id: 3, title: 'Whooper' },
+                           ]);
+                         const ItemView = ({ item }) => {
+                             return (
+                               // Flat List Item
+                               <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+                                 {item.title.toUpperCase()}
+                               </Text>
+                             );
+                         };
+                  const ItemSeparatorView = () => {
+                         return (
+                           // Flat List Item Separator
+                           <View
+                             style={{
+                               height: 0.5,
+                               width: '100%',
+                               backgroundColor: '#C8C8C8',
+                             }}
+                           />
+                         );
+                       };
+                     const getItem = (item) => {
+                           // Function for click on an item
+                            navigation.navigate('Jedzenie', {itemId: food.id, name: food.title});
 
-                    <Button title = "Wyloguj" onPress = {() => navigation.navigate("Login")} />
-             </View>
-         );
+                     };
+
+                     return (
+                         <SafeAreaView style={{ flex: 1 }}>
+                               <FlatList
+                                 data={dataSource}
+                                 keyExtractor={(food, index) => index.toString()}
+                                 ItemSeparatorComponent={ItemSeparatorView}
+                                 renderItem={ItemView}
+                                 ref={(ref) => {
+                                   listViewRef = ref;
+                                 }}
+                               />
+                         </SafeAreaView>
+                     );
    }
 
 }
