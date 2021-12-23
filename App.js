@@ -47,6 +47,10 @@ function MenuScreen({ navigation}) {
     );
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////
+
+
 const RestauracjeScreen = ({ navigation}) => {
     let listViewRef;
       const [dataSource, setDataSource] = useState([
@@ -98,6 +102,9 @@ const RestauracjeScreen = ({ navigation}) => {
     );
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////
+
+
 const JedzenieScreen = ({route, navigation}) => {
     const {itemId} = route.params;
 
@@ -130,7 +137,7 @@ const JedzenieScreen = ({route, navigation}) => {
               };
             const getItem = (item) => {
                   // Function for click on an item
-                   navigation.navigate('Jedzenie', {itemId: food.id, name: food.title});
+                  navigation.navigate('Potrawa', {itemId: item.id, name: item.title});
 
             };
 
@@ -177,7 +184,7 @@ const JedzenieScreen = ({route, navigation}) => {
                   };
                 const getItem = (item) => {
                       // Function for click on an item
-                       navigation.navigate('Jedzenie', {itemId: food.id, name: food.title});
+                      navigation.navigate('Potrawa', {itemId: item.id, name: item.title});
 
                 };
 
@@ -194,7 +201,6 @@ const JedzenieScreen = ({route, navigation}) => {
                           />
                     </SafeAreaView>
                 );
-    );
     } else if (itemId == 3) {
           let listViewRef;
                             const [dataSource, setDataSource] = useState([
@@ -224,7 +230,7 @@ const JedzenieScreen = ({route, navigation}) => {
                         };
                       const getItem = (item) => {
                             // Function for click on an item
-                             navigation.navigate('Jedzenie', {itemId: food.id, name: food.title});
+                            navigation.navigate('Potrawa', {itemId: item.id, name: item.title});
 
                       };
 
@@ -270,7 +276,7 @@ const JedzenieScreen = ({route, navigation}) => {
                        };
                      const getItem = (item) => {
                            // Function for click on an item
-                            navigation.navigate('Jedzenie', {itemId: food.id, name: food.title});
+                            navigation.navigate('Potrawa', {itemId: item.id, name: item.title});
 
                      };
 
@@ -316,7 +322,7 @@ const JedzenieScreen = ({route, navigation}) => {
                        };
                      const getItem = (item) => {
                            // Function for click on an item
-                            navigation.navigate('Jedzenie', {itemId: food.id, name: food.title});
+                            navigation.navigate('Potrawa', {itemId: item.id, name: item.title});
 
                      };
 
@@ -347,6 +353,16 @@ const UstawieniaScreen = ({ navigation}) => {
     );
 }
 
+const PotrawaScreen = ({route, navigation}) => {
+    const {itemId} = route.params;
+    return (
+        <View style = {{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+               <Text>Restauracje</Text>
+               <Button title = "Wyloguj" onPress = {() => navigation.navigate("Login")} />
+        </View>
+    );
+}
+
 const Stack = createNativeStackNavigator();
 
 
@@ -361,6 +377,7 @@ function App() {
                 <Stack.Screen name="Restauracje" component={ RestauracjeScreen } options = {{ title: 'Restauracje' }}/>
                 <Stack.Screen name="Ustawienia" component={ UstawieniaScreen } options = {{ title: 'Ustawienia' }}/>
                 <Stack.Screen name="Jedzenie" component={ JedzenieScreen } options = {({ route }) => ({ title: route.params.name })}/>
+                <Stack.Screen name="Potrawa" component={ PotrawaScreen } options = {({ route }) => ({ title: route.params.name })}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
