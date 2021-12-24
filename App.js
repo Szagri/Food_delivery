@@ -301,7 +301,7 @@ const JedzenieScreen = ({route, navigation}) => {
                            const [dataSource, setDataSource] = useState([
                              { id: 18, title: 'Nuggets'},
                              { id: 19, title: 'Oreo Shake' },
-                             { id: 20, title: 'Whooper' },
+                             { id: 20, title: 'Whopper' },
                            ]);
                          const ItemView = ({ item }) => {
                              return (
@@ -367,11 +367,12 @@ const PotrawaScreen = ({route, navigation}) => {
                 />
                 <Text style={styles.nazwa}> Classic Burger </Text>
                 <Text style={styles.opis}> 1x burger wołowy 100% 200g</Text>
-                <Text style={styles.opis}> Papryczka Jalapeno</Text>
-                <Text style={styles.opis}> Bułka świeżo pieczona</Text>
-                <Text style={styles.opis}> Ser od krówki</Text>
-                <Text style={styles.opis}> Cebula</Text>
                 <Text style={styles.opis}> Pomidor</Text>
+                <Text style={styles.opis}> Bułka świeżo pieczona</Text>
+                <Text style={styles.opis}> Ser</Text>
+                <Text style={styles.opis}> Cebula</Text>
+                <Text style={styles.opis}> Sałata</Text>
+                <Text style={styles.opis}> Sos</Text>
             </View>
         );
     }
@@ -384,11 +385,13 @@ const PotrawaScreen = ({route, navigation}) => {
                 />
                 <Text style={styles.nazwa}> BBQ Burger </Text>
                 <Text style={styles.opis}> 1x burger wołowy 100% 200g</Text>
-                <Text style={styles.opis}> Papryczka Jalapeno</Text>
+                <Text style={styles.opis}> Bekon</Text>
                 <Text style={styles.opis}> Bułka świeżo pieczona</Text>
-                <Text style={styles.opis}> Ser od krówki</Text>
+                <Text style={styles.opis}> Ser</Text>
                 <Text style={styles.opis}> Cebula</Text>
                 <Text style={styles.opis}> Pomidor</Text>
+                <Text style={styles.opis}> Ogórek kiszony</Text>
+                <Text style={styles.opis}> Sos BBQ</Text>
             </View>
         );
     }
@@ -401,12 +404,12 @@ const PotrawaScreen = ({route, navigation}) => {
 
                 />
                 <Text style={styles.nazwa}> VEGE Burger </Text>
-                <Text style={styles.opis}> 1x burger wołowy 100% 200g</Text>
-                <Text style={styles.opis}> Papryczka Jalapeno</Text>
+                <Text style={styles.opis}> Burger z buraka</Text>
+                <Text style={styles.opis}> Ser wędzony</Text>
                 <Text style={styles.opis}> Bułka świeżo pieczona</Text>
-                <Text style={styles.opis}> Ser od krówki</Text>
-                <Text style={styles.opis}> Cebula</Text>
                 <Text style={styles.opis}> Pomidor</Text>
+                <Text style={styles.opis}> Rukola</Text>
+                <Text style={styles.opis}> Sos</Text>
             </View>
         );
     }
@@ -427,6 +430,181 @@ const PotrawaScreen = ({route, navigation}) => {
             </View>
         );
     }
+
+    if(itemId === 10) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\tcb.jpg')}
+                    />
+                    <Text style={styles.nazwa}> Triple Cheese Burger </Text>
+                    <Text style={styles.opis}> 2x burger wołowy 100% 100g</Text>
+                    <Text style={styles.opis}> Ser cheddar</Text>
+                    <Text style={styles.opis}> Bułka świeżo pieczona</Text>
+                    <Text style={styles.opis}> Ser od krówki</Text>
+                    <Text style={styles.opis}> Cebula</Text>
+                    <Text style={styles.opis}> Pomidor</Text>
+                    <Text style={styles.opis}> Sałata</Text>
+
+                </View>
+            );
+        }
+
+    if(itemId === 11) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\spicy.jpg')}
+                    />
+                    <Text style={styles.nazwa}> Spicy Burger </Text>
+                    <Text style={styles.opis}> 1x burger wołowy 100% 200g</Text>
+                    <Text style={styles.opis}> Papryczka Chilli</Text>
+                    <Text style={styles.opis}> Bułka świeżo pieczona</Text>
+                    <Text style={styles.opis}> Ser od krówki</Text>
+                    <Text style={styles.opis}> Cebula</Text>
+                    <Text style={styles.opis}> Ogórek</Text>
+                    <Text style={styles.opis}> Extra Hot Sos</Text>
+                </View>
+            );
+        }
+
+    if(itemId === 12) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\drwal.png')}
+                    />
+                    <Text style={styles.nazwa}> Burger Drwala </Text>
+                    <Text style={styles.opis}> Wołowina</Text>
+                    <Text style={styles.opis}> Zapiekany Ser</Text>
+                    <Text style={styles.opis}> Boczek</Text>
+                    <Text style={styles.opis}> Sałata</Text>
+                    <Text style={styles.opis}> Sos</Text>
+                </View>
+            );
+        }
+
+    if(itemId === 13) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\wrap.png')}
+                    />
+                    <Text style={styles.nazwa}> McWrap </Text>
+                    <Text style={styles.opis}> Pszenny wrap</Text>
+                    <Text style={styles.opis}> Kurczak</Text>
+                    <Text style={styles.opis}> Rukola</Text>
+                    <Text style={styles.opis}> Pomidor</Text>
+                    <Text style={styles.opis}> Ser Cheddar</Text>
+                    <Text style={styles.opis}> Sos</Text>
+                </View>
+            );
+        }
+
+    if(itemId === 14) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\flurry.png')}
+                    />
+                    <Text style={styles.nazwa}> MCFlurry </Text>
+                    <Text style={styles.opis}> Smak czekoladowy</Text>
+                </View>
+            );
+        }
+
+    if(itemId === 15) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\kubelek.jpg')}
+                    />
+                    <Text style={styles.nazwa}> Kubełek Classic </Text>
+                    <Text style={styles.opis}> 2 x Kawałki kurczaka </Text>
+                    <Text style={styles.opis}> 4 x Hot Wings </Text>
+                    <Text style={styles.opis}> 4 x Hot Strips</Text>
+                    <Text style={styles.opis}> 2 x Frytki</Text>
+                </View>
+            );
+        }
+
+    if(itemId === 16) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\besmart.webp')}
+                    />
+                    <Text style={styles.nazwa}> BeSmart </Text>
+                    <Text style={styles.opis}> Longer</Text>
+                    <Text style={styles.opis}> Frytki</Text>
+                </View>
+            );
+        }
+
+    if(itemId === 17) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\frytki.png')}
+                    />
+                    <Text style={styles.nazwa}> Frytki duże </Text>
+                    <Text style={styles.opis}> 200 g</Text>
+                </View>
+            );
+        }
+
+    if(itemId === 18) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\nuggets.png')}
+                    />
+                    <Text style={styles.nazwa}> Chicken Nuggets </Text>
+                    <Text style={styles.opis}> 8 x Nugget</Text>
+                    <Text style={styles.opis}> Małe frytki</Text>
+                </View>
+            );
+        }
+
+    if(itemId === 19) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\oreo.png')}
+                    />
+                    <Text style={styles.nazwa}> Oreo Shake </Text>
+                    <Text style={styles.opis}> Shake klaszyczny</Text>
+                </View>
+            );
+        }
+
+    if(itemId === 20) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        style={styles.logo}
+                        source={require('pam\\assets\\whopper.png')}
+                    />
+                    <Text style={styles.nazwa}> Whopper Classic </Text>
+                    <Text style={styles.opis}> 1x burger wołowy</Text>
+                    <Text style={styles.opis}> Sałata</Text>
+                    <Text style={styles.opis}> Pomidor</Text>
+                    <Text style={styles.opis}> Cebula</Text>
+                    <Text style={styles.opis}> Ogórek Konserwowy</Text>
+                    <Text style={styles.opis}> Majonez, Ketchup</Text>
+                </View>
+            );
+        }
 }
 
 const Stack = createNativeStackNavigator();
