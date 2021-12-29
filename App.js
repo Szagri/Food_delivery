@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Image, TouchableOpacity, FlatList,TouchableHighlight, SectionList, SafeAreaView, StyleSheet, TextInput, Text, View, Button } from 'react-native';
+import { Image, TouchableOpacity, FlatList,TouchableHighlight, SectionList, SafeAreaView, StyleSheet, TextInput, Text, View, Button, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {Picker} from '@react-native-picker/picker';
 import TextAncestorContext from "react-native-web/dist/exports/Text/TextAncestorContext";
 
 
@@ -111,7 +112,7 @@ const RestauracjeScreen = ({ navigation}) => {
 const JedzenieScreen = ({route, navigation}) => {
     const {itemId} = route.params;
 
-    if(itemId == 1) {
+    if(itemId === 1) {
         let listViewRef;
                   const [dataSource, setDataSource] = useState([
                     { id: 6, title: 'Classic'},
@@ -158,7 +159,7 @@ const JedzenieScreen = ({route, navigation}) => {
                 </SafeAreaView>
             );
 
-    } else if (itemId == 2) {
+    } else if (itemId === 2) {
     let listViewRef;
                       const [dataSource, setDataSource] = useState([
                         { id: 9, title: 'Jalapeno Burger'},
@@ -204,7 +205,7 @@ const JedzenieScreen = ({route, navigation}) => {
                           />
                     </SafeAreaView>
                 );
-    } else if (itemId == 3) {
+    } else if (itemId === 3) {
           let listViewRef;
                             const [dataSource, setDataSource] = useState([
                               { id: 12, title: 'Drwal'},
@@ -250,7 +251,7 @@ const JedzenieScreen = ({route, navigation}) => {
                                 />
                           </SafeAreaView>
                       );
-   } else if (itemId == 4) {
+   } else if (itemId === 4) {
          let listViewRef;
                            const [dataSource, setDataSource] = useState([
                              { id: 15, title: 'Kubełek Classic'},
@@ -296,7 +297,7 @@ const JedzenieScreen = ({route, navigation}) => {
                                />
                          </SafeAreaView>
                      );
-   } else if (itemId == 5) {
+   } else if (itemId === 5) {
          let listViewRef;
                            const [dataSource, setDataSource] = useState([
                              { id: 18, title: 'Nuggets'},
@@ -356,8 +357,11 @@ const UstawieniaScreen = ({ navigation}) => {
     );
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 const PotrawaScreen = ({route, navigation}) => {
     const {itemId} = route.params;
+    const [selectedValue, setSelectedValue] = useState("1");
     if(itemId === 6) {
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -373,6 +377,24 @@ const PotrawaScreen = ({route, navigation}) => {
                 <Text style={styles.opis}> Cebula</Text>
                 <Text style={styles.opis}> Sałata</Text>
                 <Text style={styles.opis}> Sos</Text>
+                <Text style={styles.opis}> Cena: 17.50</Text>
+                <Text style={styles.ilosc}> Ilość </Text>
+                <Picker
+                    selectedValue={selectedValue}
+                    style={styles.list}
+                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                >
+                    <Picker.Item label="1" value="1" />
+                    <Picker.Item label="2" value="2" />
+                    <Picker.Item label="3" value="3" />
+                    <Picker.Item label="4" value="4" />
+                    <Picker.Item label="5" value="5" />
+                    <Picker.Item label="6" value="6" />
+                </Picker>
+                <Button style={styles.zamow}
+                    title="Zamów"
+                    onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                />
             </View>
         );
     }
@@ -392,6 +414,24 @@ const PotrawaScreen = ({route, navigation}) => {
                 <Text style={styles.opis}> Pomidor</Text>
                 <Text style={styles.opis}> Ogórek kiszony</Text>
                 <Text style={styles.opis}> Sos BBQ</Text>
+                <Text style={styles.opis}> Cena: 19.50</Text>
+                <Text style={styles.ilosc}> Ilość </Text>
+                <Picker
+                    selectedValue={selectedValue}
+                    style={styles.list}
+                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                >
+                    <Picker.Item label="1" value="1" />
+                    <Picker.Item label="2" value="2" />
+                    <Picker.Item label="3" value="3" />
+                    <Picker.Item label="4" value="4" />
+                    <Picker.Item label="5" value="5" />
+                    <Picker.Item label="6" value="6" />
+                </Picker>
+                <Button style={styles.zamow}
+                        title="Zamów"
+                        onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                />
             </View>
         );
     }
@@ -410,6 +450,24 @@ const PotrawaScreen = ({route, navigation}) => {
                 <Text style={styles.opis}> Pomidor</Text>
                 <Text style={styles.opis}> Rukola</Text>
                 <Text style={styles.opis}> Sos</Text>
+                <Text style={styles.opis}> Cena: 16.00</Text>
+                <Text style={styles.ilosc}> Ilość </Text>
+                <Picker
+                    selectedValue={selectedValue}
+                    style={styles.list}
+                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                >
+                    <Picker.Item label="1" value="1" />
+                    <Picker.Item label="2" value="2" />
+                    <Picker.Item label="3" value="3" />
+                    <Picker.Item label="4" value="4" />
+                    <Picker.Item label="5" value="5" />
+                    <Picker.Item label="6" value="6" />
+                </Picker>
+                <Button style={styles.zamow}
+                        title="Zamów"
+                        onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                />
             </View>
         );
     }
@@ -427,6 +485,24 @@ const PotrawaScreen = ({route, navigation}) => {
                 <Text style={styles.opis}> Ser od krówki</Text>
                 <Text style={styles.opis}> Cebula</Text>
                 <Text style={styles.opis}> Pomidor</Text>
+                <Text style={styles.opis}> Cena: 22.00</Text>
+                <Text style={styles.ilosc}> Ilość </Text>
+                <Picker
+                    selectedValue={selectedValue}
+                    style={styles.list}
+                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                >
+                    <Picker.Item label="1" value="1" />
+                    <Picker.Item label="2" value="2" />
+                    <Picker.Item label="3" value="3" />
+                    <Picker.Item label="4" value="4" />
+                    <Picker.Item label="5" value="5" />
+                    <Picker.Item label="6" value="6" />
+                </Picker>
+                <Button style={styles.zamow}
+                        title="Zamów"
+                        onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                />
             </View>
         );
     }
@@ -446,7 +522,25 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Cebula</Text>
                     <Text style={styles.opis}> Pomidor</Text>
                     <Text style={styles.opis}> Sałata</Text>
-
+                    <Text style={styles.opis}> Sos</Text>
+                    <Text style={styles.opis}> Cena: 25.50 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -466,6 +560,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Cebula</Text>
                     <Text style={styles.opis}> Ogórek</Text>
                     <Text style={styles.opis}> Extra Hot Sos</Text>
+                    <Text style={styles.opis}> Cena: 22.50 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -483,6 +595,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Boczek</Text>
                     <Text style={styles.opis}> Sałata</Text>
                     <Text style={styles.opis}> Sos</Text>
+                    <Text style={styles.opis}> Cena: 17.90 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -501,6 +631,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Pomidor</Text>
                     <Text style={styles.opis}> Ser Cheddar</Text>
                     <Text style={styles.opis}> Sos</Text>
+                    <Text style={styles.opis}> Cena: 16.90 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -514,6 +662,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     />
                     <Text style={styles.nazwa}> MCFlurry </Text>
                     <Text style={styles.opis}> Smak czekoladowy</Text>
+                    <Text style={styles.opis}> Cena: 8.90 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -530,6 +696,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> 4 x Hot Wings </Text>
                     <Text style={styles.opis}> 4 x Hot Strips</Text>
                     <Text style={styles.opis}> 2 x Frytki</Text>
+                    <Text style={styles.opis}> Cena: 43.99 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -544,6 +728,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.nazwa}> BeSmart </Text>
                     <Text style={styles.opis}> Longer</Text>
                     <Text style={styles.opis}> Frytki</Text>
+                    <Text style={styles.opis}> Cena: 8.99 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -557,6 +759,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     />
                     <Text style={styles.nazwa}> Frytki duże </Text>
                     <Text style={styles.opis}> 200 g</Text>
+                    <Text style={styles.opis}> Cena: 3.99 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -571,6 +791,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.nazwa}> Chicken Nuggets </Text>
                     <Text style={styles.opis}> 8 x Nugget</Text>
                     <Text style={styles.opis}> Małe frytki</Text>
+                    <Text style={styles.opis}> Cena: 11.99 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -584,6 +822,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     />
                     <Text style={styles.nazwa}> Oreo Shake </Text>
                     <Text style={styles.opis}> Shake klaszyczny</Text>
+                    <Text style={styles.opis}> Cena: 6.99 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -602,6 +858,24 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Cebula</Text>
                     <Text style={styles.opis}> Ogórek Konserwowy</Text>
                     <Text style={styles.opis}> Majonez, Ketchup</Text>
+                    <Text style={styles.opis}> Cena: 8.99 </Text>
+                    <Text style={styles.ilosc}> Ilość </Text>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                    <Button style={styles.zamow}
+                            title="Zamów"
+                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
+                    />
                 </View>
             );
         }
@@ -628,7 +902,7 @@ function App() {
 }
 
 const styles = StyleSheet.create({
-       itemStyle: {
+        itemStyle: {
            padding: 30,
            fontSize: 20,
         },
@@ -652,6 +926,21 @@ const styles = StyleSheet.create({
     opis: {
            flex: 0.5,
     },
+    list: {
+           flex: 0.5,
+           height: 50,
+           width: 150,
+           alignItems: "center",
+    },
+    ilosc: {
+           flex: 0.5,
+           fontSize: 20,
+    },
+    zamow: {
+        flex: 0.5,
+        fontSize: 20,
+        justifyContent: 'center',
+    }
 });
 
 export default App;
