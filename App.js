@@ -1,25 +1,35 @@
-import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Image, TouchableOpacity, FlatList,TouchableHighlight, SectionList, SafeAreaView, StyleSheet, TextInput, Text, View, Button, Alert } from 'react-native';
+import React, {useEffect, useState } from 'react';
+import { Image, StatusBar, FlatList, SafeAreaView, StyleSheet, TextInput, Text, View, Alert, Pressable  } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {Picker} from '@react-native-picker/picker';
-import TextAncestorContext from "react-native-web/dist/exports/Text/TextAncestorContext";
+import * as Location from 'expo-location';
 
-
-
+const STYLES = ['default', 'dark-content', 'light-content'];
+const TRANSITIONS = ['fade', 'slide', 'none'];
 
 const LoginScreen = ({navigation}) => {
-      const [text, onChangeText] = React.useState(null);
-      const [password, onChangePassword] = React.useState(null);
+
+    const [text, onChangeText] = React.useState(null);
+    const [password, onChangePassword] = React.useState(null);
+    const [hidden] = useState(false);
+    const [statusBarStyle] = useState(STYLES[0]);
+    const [statusBarTransition] = useState(TRANSITIONS[0]);
+
     return (
-        <View style = {{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <SafeAreaView>
+        <SafeAreaView style = {styles.container}>
+                <StatusBar
+                animated={true}
+                backgroundColor="#BA2C73"
+                barStyle={statusBarStyle}
+                showHideTransition={statusBarTransition}
+                hidden={hidden} />
                   <TextInput
                     style={styles.input}
                     onChangeText={onChangeText}
                     value={text}
                     placeholder="Nazwa użytkownika"
+                    placeholderTextColor= '#BA2C73'
                   />
                   <TextInput
                     style={styles.input}
@@ -27,26 +37,27 @@ const LoginScreen = ({navigation}) => {
                     secureTextEntry={true}
                     value={password}
                     placeholder="Hasło"
+                    placeholderTextColor= '#BA2C73'
                   />
-                </SafeAreaView>
-            <Button
-                title="Loguj"
-                onPress = {() => navigation.navigate('Menu')}
-            />
-        </View>
+            <Pressable style={styles.button} onPress = {() => navigation.navigate('Menu')}>
+                <Text style={styles.text_button}>Loguj</Text>
+            </Pressable>
+        </SafeAreaView>
     );
 }
 
 function MenuScreen({ navigation}) {
     return (
-        <View style = {{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>Menu</Text>
-            <Button
-                title="Restauracje"
-                onPress = {() => navigation.navigate('Restauracje')}
-            />
-            <Button title = "Ustawienia" onPress= {() => navigation.navigate('Ustawienia')} />
-            <Button title = "Wyloguj" onPress = {() => navigation.navigate("Login")} />
+        <View style = {styles.container}>
+            <Pressable style={styles.button} onPress = {() => navigation.navigate('Restauracje')}>
+                <Text style={styles.text_button}>Restauracje</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress= {() => navigation.navigate('Ustawienia')}>
+                <Text style={styles.text_button}>Ustawienia</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress = {() => navigation.navigate("Login")}>
+                <Text style={styles.text_button}>Wyloguj</Text>
+            </Pressable>
         </View>
     );
 }
@@ -57,7 +68,7 @@ function MenuScreen({ navigation}) {
 
 const RestauracjeScreen = ({ navigation}) => {
     let listViewRef;
-      const [dataSource, setDataSource] = useState([
+      const [dataSource] = useState([
         { id: 1, title: 'John burg'},
         { id: 2, title: 'Bó' },
         { id: 3, title: 'MC Donalds' },
@@ -78,9 +89,9 @@ const RestauracjeScreen = ({ navigation}) => {
           // Flat List Item Separator
           <View
             style={{
-              height: 0.5,
+              height: 1.5,
               width: '100%',
-              backgroundColor: '#C8C8C8',
+              backgroundColor: '#BA2C73',
             }}
           />
         );
@@ -92,7 +103,7 @@ const RestauracjeScreen = ({ navigation}) => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={styles.list_menu}>
               <FlatList
                 data={dataSource}
                 keyExtractor={(item, index) => index.toString()}
@@ -114,7 +125,7 @@ const JedzenieScreen = ({route, navigation}) => {
 
     if(itemId === 1) {
         let listViewRef;
-                  const [dataSource, setDataSource] = useState([
+                  const [dataSource] = useState([
                     { id: 6, title: 'Classic'},
                     { id: 7, title: 'BBQ Burger' },
                     { id: 8, title: 'Vege Burger' },
@@ -132,9 +143,9 @@ const JedzenieScreen = ({route, navigation}) => {
                   // Flat List Item Separator
                   <View
                     style={{
-                      height: 0.5,
+                      height: 1.5,
                       width: '100%',
-                      backgroundColor: '#C8C8C8',
+                      backgroundColor: '#BA2C73',
                     }}
                   />
                 );
@@ -146,7 +157,7 @@ const JedzenieScreen = ({route, navigation}) => {
             };
 
             return (
-                <SafeAreaView style={{ flex: 1 }}>
+                <SafeAreaView style={styles.list_menu}>
                       <FlatList
                         data={dataSource}
                         keyExtractor={(food, index) => index.toString()}
@@ -161,7 +172,7 @@ const JedzenieScreen = ({route, navigation}) => {
 
     } else if (itemId === 2) {
     let listViewRef;
-                      const [dataSource, setDataSource] = useState([
+                      const [dataSource] = useState([
                         { id: 9, title: 'Jalapeno Burger'},
                         { id: 10, title: 'Triple Cheese Burger' },
                         { id: 11, title: 'Spicy Burger' },
@@ -179,9 +190,9 @@ const JedzenieScreen = ({route, navigation}) => {
                       // Flat List Item Separator
                       <View
                         style={{
-                          height: 0.5,
+                          height: 1.5,
                           width: '100%',
-                          backgroundColor: '#C8C8C8',
+                          backgroundColor: '#BA2C73',
                         }}
                       />
                     );
@@ -193,7 +204,7 @@ const JedzenieScreen = ({route, navigation}) => {
                 };
 
                 return (
-                    <SafeAreaView style={{ flex: 1 }}>
+                    <SafeAreaView style={styles.list_menu}>
                           <FlatList
                             data={dataSource}
                             keyExtractor={(food, index) => index.toString()}
@@ -207,7 +218,7 @@ const JedzenieScreen = ({route, navigation}) => {
                 );
     } else if (itemId === 3) {
           let listViewRef;
-                            const [dataSource, setDataSource] = useState([
+                            const [dataSource] = useState([
                               { id: 12, title: 'Drwal'},
                               { id: 13, title: 'McWrap' },
                               { id: 14, title: 'McFlurry' },
@@ -225,9 +236,9 @@ const JedzenieScreen = ({route, navigation}) => {
                             // Flat List Item Separator
                             <View
                               style={{
-                                height: 0.5,
+                                height: 1.5,
                                 width: '100%',
-                                backgroundColor: '#C8C8C8',
+                                backgroundColor: '#BA2C73',
                               }}
                             />
                           );
@@ -239,7 +250,7 @@ const JedzenieScreen = ({route, navigation}) => {
                       };
 
                       return (
-                          <SafeAreaView style={{ flex: 1 }}>
+                          <SafeAreaView style={styles.list_menu}>
                                 <FlatList
                                   data={dataSource}
                                   keyExtractor={(food, index) => index.toString()}
@@ -253,7 +264,7 @@ const JedzenieScreen = ({route, navigation}) => {
                       );
    } else if (itemId === 4) {
          let listViewRef;
-                           const [dataSource, setDataSource] = useState([
+                           const [dataSource] = useState([
                              { id: 15, title: 'Kubełek Classic'},
                              { id: 16, title: 'BeSmart' },
                              { id: 17, title: 'Frytki' },
@@ -271,9 +282,9 @@ const JedzenieScreen = ({route, navigation}) => {
                            // Flat List Item Separator
                            <View
                              style={{
-                               height: 0.5,
+                               height: 1.5,
                                width: '100%',
-                               backgroundColor: '#C8C8C8',
+                               backgroundColor: '#BA2C73',
                              }}
                            />
                          );
@@ -285,7 +296,7 @@ const JedzenieScreen = ({route, navigation}) => {
                      };
 
                      return (
-                         <SafeAreaView style={{ flex: 1 }}>
+                         <SafeAreaView style={styles.list_menu}>
                                <FlatList
                                  data={dataSource}
                                  keyExtractor={(food, index) => index.toString()}
@@ -299,7 +310,7 @@ const JedzenieScreen = ({route, navigation}) => {
                      );
    } else if (itemId === 5) {
          let listViewRef;
-                           const [dataSource, setDataSource] = useState([
+                           const [dataSource] = useState([
                              { id: 18, title: 'Nuggets'},
                              { id: 19, title: 'Oreo Shake' },
                              { id: 20, title: 'Whopper' },
@@ -317,9 +328,9 @@ const JedzenieScreen = ({route, navigation}) => {
                            // Flat List Item Separator
                            <View
                              style={{
-                               height: 0.5,
+                               height: 1.5,
                                width: '100%',
-                               backgroundColor: '#C8C8C8',
+                               backgroundColor: '#BA2C73',
                              }}
                            />
                          );
@@ -331,7 +342,7 @@ const JedzenieScreen = ({route, navigation}) => {
                      };
 
                      return (
-                         <SafeAreaView style={{ flex: 1 }}>
+                         <SafeAreaView style={styles.list_menu}>
                                <FlatList
                                  data={dataSource}
                                  keyExtractor={(food, index) => index.toString()}
@@ -349,22 +360,85 @@ const JedzenieScreen = ({route, navigation}) => {
 
 
 const UstawieniaScreen = ({ navigation}) => {
+    const [setLocationServiceEnabled] = useState(false);
+    const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
+        'Czekaj, pobieramy Twoją lokalizację...'
+    );
+
+    // first update the useEffect hook
+    useEffect(() => {
+        CheckIfLocationEnabled();
+        GetCurrentLocation();
+    }, []);
+
+
+// create the handler method
+    const CheckIfLocationEnabled = async () => {
+        let enabled = await Location.hasServicesEnabledAsync();
+
+        if (!enabled) {
+            Alert.alert(
+                'Usługa lokalizacji nie jest włączona',
+                'Włącz usługi lokalizacyjne, aby kontynuować',
+                [{ text: 'OK' }],
+                { cancelable: false }
+            );
+        } else {
+            setLocationServiceEnabled(enabled);
+        }
+    };
+
+    const GetCurrentLocation = async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+
+        if (status !== 'granted') {
+            Alert.alert(
+                'Nie udzielono pozwolenia',
+                'Zezwól aplikacji na korzystanie z usługi lokalizacyjnej.',
+                [{ text: 'OK' }],
+                { cancelable: false }
+            );
+        }
+
+        let { coords } = await Location.getCurrentPositionAsync();
+
+        if (coords) {
+            const { latitude, longitude } = coords;
+            let response = await Location.reverseGeocodeAsync({
+                latitude,
+                longitude
+            });
+
+            for (let item of response) {
+                let address = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
+
+                setDisplayCurrentAddress(address);
+                if (address.length > 0) {
+                    setTimeout(() => {
+                        navigation.navigate('Menu', { item: address });
+                    }, 2000);
+                }
+            }
+        }
+    };
     return (
-        <View style = {{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-               <Text>Restauracje</Text>
-               <Button title = "Wyloguj" onPress = {() => navigation.navigate("Login")} />
+        <View style={styles.container}>
+            <View style={styles.contentContainer}>
+                <Text style={styles.title}>Twoja aktualna lokalizacja</Text>
+            </View>
+            <Text style={styles.text}>{displayCurrentAddress}</Text>
         </View>
     );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-const PotrawaScreen = ({route, navigation}) => {
+const PotrawaScreen = ({route}) => {
     const {itemId} = route.params;
     const [selectedValue, setSelectedValue] = useState("1");
     if(itemId === 6) {
         return (
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.container}>
                 <Image
                     style={styles.logo}
                     source={require('pam\\assets\\classic.jpg')}
@@ -379,28 +453,30 @@ const PotrawaScreen = ({route, navigation}) => {
                 <Text style={styles.opis}> Sos</Text>
                 <Text style={styles.opis}> Cena: 17.50</Text>
                 <Text style={styles.ilosc}> Ilość </Text>
-                <Picker
-                    selectedValue={selectedValue}
-                    style={styles.list}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                    <Picker.Item label="1" value="1" />
-                    <Picker.Item label="2" value="2" />
-                    <Picker.Item label="3" value="3" />
-                    <Picker.Item label="4" value="4" />
-                    <Picker.Item label="5" value="5" />
-                    <Picker.Item label="6" value="6" />
-                </Picker>
-                <Button style={styles.zamow}
-                    title="Zamów"
-                    onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                />
+                <View style={styles.picker}>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        dropdownIconColor={'#BA2C73'}
+                        onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                </View>
+                <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Text style={styles.text_button}>Zamów</Text>
+                </Pressable>
             </View>
         );
     }
     if(itemId === 7) {
         return (
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.container}>
                 <Image
                     style={styles.logo}
                     source={require('pam\\assets\\bbq.jpg')}
@@ -416,28 +492,30 @@ const PotrawaScreen = ({route, navigation}) => {
                 <Text style={styles.opis}> Sos BBQ</Text>
                 <Text style={styles.opis}> Cena: 19.50</Text>
                 <Text style={styles.ilosc}> Ilość </Text>
-                <Picker
-                    selectedValue={selectedValue}
-                    style={styles.list}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                    <Picker.Item label="1" value="1" />
-                    <Picker.Item label="2" value="2" />
-                    <Picker.Item label="3" value="3" />
-                    <Picker.Item label="4" value="4" />
-                    <Picker.Item label="5" value="5" />
-                    <Picker.Item label="6" value="6" />
-                </Picker>
-                <Button style={styles.zamow}
-                        title="Zamów"
-                        onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                />
+                <View style={styles.picker}>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        dropdownIconColor={'#BA2C73'}
+                        onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                </View>
+                <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Text style={styles.text_button}>Zamów</Text>
+                </Pressable>
             </View>
         );
     }
     if(itemId === 8) {
         return (
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.container}>
                 <Image
                     style={styles.logo}
                     source={require('pam\\assets\\vege.jpg')}
@@ -452,28 +530,30 @@ const PotrawaScreen = ({route, navigation}) => {
                 <Text style={styles.opis}> Sos</Text>
                 <Text style={styles.opis}> Cena: 16.00</Text>
                 <Text style={styles.ilosc}> Ilość </Text>
-                <Picker
-                    selectedValue={selectedValue}
-                    style={styles.list}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                    <Picker.Item label="1" value="1" />
-                    <Picker.Item label="2" value="2" />
-                    <Picker.Item label="3" value="3" />
-                    <Picker.Item label="4" value="4" />
-                    <Picker.Item label="5" value="5" />
-                    <Picker.Item label="6" value="6" />
-                </Picker>
-                <Button style={styles.zamow}
-                        title="Zamów"
-                        onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                />
+                <View style={styles.picker}>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        dropdownIconColor={'#BA2C73'}
+                        onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                </View>
+                <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Text style={styles.text_button}>Zamów</Text>
+                </Pressable>
             </View>
         );
     }
     if(itemId === 9) {
         return (
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.container}>
                 <Image
                     style={styles.logo}
                     source={require('pam\\assets\\jalapeno.jpg')}
@@ -487,29 +567,31 @@ const PotrawaScreen = ({route, navigation}) => {
                 <Text style={styles.opis}> Pomidor</Text>
                 <Text style={styles.opis}> Cena: 22.00</Text>
                 <Text style={styles.ilosc}> Ilość </Text>
-                <Picker
-                    selectedValue={selectedValue}
-                    style={styles.list}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                    <Picker.Item label="1" value="1" />
-                    <Picker.Item label="2" value="2" />
-                    <Picker.Item label="3" value="3" />
-                    <Picker.Item label="4" value="4" />
-                    <Picker.Item label="5" value="5" />
-                    <Picker.Item label="6" value="6" />
-                </Picker>
-                <Button style={styles.zamow}
-                        title="Zamów"
-                        onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                />
+                <View style={styles.picker}>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={styles.list}
+                        dropdownIconColor={'#BA2C73'}
+                        onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                    >
+                        <Picker.Item label="1" value="1" />
+                        <Picker.Item label="2" value="2" />
+                        <Picker.Item label="3" value="3" />
+                        <Picker.Item label="4" value="4" />
+                        <Picker.Item label="5" value="5" />
+                        <Picker.Item label="6" value="6" />
+                    </Picker>
+                </View>
+                <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Text style={styles.text_button}>Zamów</Text>
+                </Pressable>
             </View>
         );
     }
 
     if(itemId === 10) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\tcb.jpg')}
@@ -525,29 +607,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Sos</Text>
                     <Text style={styles.opis}> Cena: 25.50 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 11) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\spicy.jpg')}
@@ -562,29 +646,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Extra Hot Sos</Text>
                     <Text style={styles.opis}> Cena: 22.50 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 12) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\drwal.png')}
@@ -597,29 +683,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Sos</Text>
                     <Text style={styles.opis}> Cena: 17.90 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 13) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\wrap.png')}
@@ -633,29 +721,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Sos</Text>
                     <Text style={styles.opis}> Cena: 16.90 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 14) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\flurry.png')}
@@ -664,29 +754,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Smak czekoladowy</Text>
                     <Text style={styles.opis}> Cena: 8.90 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 15) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\kubelek.jpg')}
@@ -698,29 +790,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> 2 x Frytki</Text>
                     <Text style={styles.opis}> Cena: 43.99 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 16) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\besmart.webp')}
@@ -730,29 +824,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Frytki</Text>
                     <Text style={styles.opis}> Cena: 8.99 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 17) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\frytki.png')}
@@ -761,29 +857,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> 200 g</Text>
                     <Text style={styles.opis}> Cena: 3.99 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 18) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\nuggets.png')}
@@ -793,29 +891,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Małe frytki</Text>
                     <Text style={styles.opis}> Cena: 11.99 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 19) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\oreo.png')}
@@ -824,29 +924,31 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Shake klaszyczny</Text>
                     <Text style={styles.opis}> Cena: 6.99 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
-                    <Picker
-                        selectedValue={selectedValue}
-                        style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                    </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={styles.list}
+                            dropdownIconColor={'#BA2C73'}
+                            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                        </Picker>
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                        <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
 
     if(itemId === 20) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Image
                         style={styles.logo}
                         source={require('pam\\assets\\whopper.png')}
@@ -860,10 +962,12 @@ const PotrawaScreen = ({route, navigation}) => {
                     <Text style={styles.opis}> Majonez, Ketchup</Text>
                     <Text style={styles.opis}> Cena: 8.99 </Text>
                     <Text style={styles.ilosc}> Ilość </Text>
+                    <View style={styles.picker}>
                     <Picker
                         selectedValue={selectedValue}
                         style={styles.list}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                        dropdownIconColor={'#BA2C73'}
+                        onValueChange={(itemValue) => setSelectedValue(itemValue)}
                     >
                         <Picker.Item label="1" value="1" />
                         <Picker.Item label="2" value="2" />
@@ -872,10 +976,10 @@ const PotrawaScreen = ({route, navigation}) => {
                         <Picker.Item label="5" value="5" />
                         <Picker.Item label="6" value="6" />
                     </Picker>
-                    <Button style={styles.zamow}
-                            title="Zamów"
-                            onPress={() => Alert.alert('Zamówione byczq', selectedValue)}
-                    />
+                    </View>
+                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                            <Text style={styles.text_button}>Zamów</Text>
+                    </Pressable>
                 </View>
             );
         }
@@ -890,57 +994,116 @@ function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Login" component={ LoginScreen } options = {{ title: 'Kucharek' }}/>
-                <Stack.Screen name="Menu" component={ MenuScreen } options = {{ title: 'Menu' }}/>
-                <Stack.Screen name="Restauracje" component={ RestauracjeScreen } options = {{ title: 'Restauracje' }}/>
-                <Stack.Screen name="Ustawienia" component={ UstawieniaScreen } options = {{ title: 'Ustawienia' }}/>
-                <Stack.Screen name="Jedzenie" component={ JedzenieScreen } options = {({ route }) => ({ title: route.params.name })}/>
-                <Stack.Screen name="Potrawa" component={ PotrawaScreen } options = {({ route }) => ({ title: route.params.name })}/>
+                <Stack.Screen name="Login" component={ LoginScreen } options = {{ title: 'Kucharek', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'},}}/>
+                <Stack.Screen name="Menu" component={ MenuScreen } options = {{ title: 'Menu', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+                <Stack.Screen name="Restauracje" component={ RestauracjeScreen } options = {{ title: 'Restauracje', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+                <Stack.Screen name="Ustawienia" component={ UstawieniaScreen } options = {{ title: 'Ustawienia', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+                <Stack.Screen name="Jedzenie" component={ JedzenieScreen } options = {({ route }) => ({ title: route.params.name, headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, })}/>
+                <Stack.Screen name="Potrawa" component={ PotrawaScreen } options = {({ route }) => ({ title: route.params.name, headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, })}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
 }
 
 const styles = StyleSheet.create({
-        itemStyle: {
-           padding: 30,
-           fontSize: 20,
-        },
-      input: {
-         height: 50,
-         margin: 20,
-         borderWidth: 1,
-         padding: 10,
-      },
-      logo: {
-          flex: 5,
-          height: 70,
-          resizeMode: 'contain',
-      },
+    itemStyle: {
+        padding: 30,
+        fontSize: 20,
+        color: '#BA2C73',
+        width: '100%',
+    },
+    input: {
+        height: 60,
+        width: 225,
+        margin: 20,
+        borderWidth: 2,
+        borderColor: '#BA2C73',
+        color: '#BA2C73',
+        padding: 10,
+    },
+    logo: {
+        flex: 5,
+        height: 70,
+        resizeMode: 'contain',
+    },
     nazwa: {
         flex: 1,
         fontSize: 30,
         margin: 0,
         padding: 0,
+        color: '#BA2C73',
     },
     opis: {
-           flex: 0.5,
+        flex: 0.5,
+        color: '#BA2C73',
     },
     list: {
-           flex: 0.5,
-           height: 50,
-           width: 150,
-           alignItems: "center",
+        width: 160,
+        alignItems: "center",
+        color: '#BA2C73',
     },
-    ilosc: {
-           flex: 0.5,
-           fontSize: 20,
-    },
-    zamow: {
-        flex: 0.5,
-        fontSize: 20,
+    picker: {
+        flex: 0.7,
+        alignItems: "center",
         justifyContent: 'center',
-    }
+        borderWidth: 1,
+        borderColor: '#BA2C73',
+        borderRadius: 4,
+    },
+
+    ilosc: {
+        flex: 0.5,
+        color: '#BA2C73',
+        fontSize: 20,
+    },
+
+    container: {
+        flex: 1,
+        backgroundColor: '#282F44',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+    },
+    contentContainer: {
+        paddingHorizontal: 20,
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: '#BA2C73',
+        paddingBottom: 10,
+    },
+    text: {
+        fontSize: 20,
+        fontWeight: '400',
+        color: '#BA2C73',
+    },
+
+    text_button: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: '#282F44',
+    },
+
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: '#BA2C73',
+        margin: 20,
+    },
+    list_menu: {
+        flex:1,
+        backgroundColor: '#282F44',
+        justifyContent: 'center',
+        width: '100%',
+    },
 });
 
 export default App;
