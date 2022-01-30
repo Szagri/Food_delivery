@@ -1,12 +1,19 @@
-import React, {useEffect, useState } from 'react';
-import { Image, StatusBar, FlatList, SafeAreaView, StyleSheet, TextInput, Text, View, Alert, Pressable  } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { Image, StatusBar, FlatList, SafeAreaView, TextInput, Text, View, Alert, Pressable  } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Picker} from '@react-native-picker/picker';
 import * as Location from 'expo-location';
+import {styles} from "./styles";
+import MapView, {Marker} from 'react-native-maps';
+
+
 
 const STYLES = ['default', 'dark-content', 'light-content'];
 const TRANSITIONS = ['fade', 'slide', 'none'];
+
+
 
 const LoginScreen = ({navigation}) => {
 
@@ -55,9 +62,13 @@ function MenuScreen({ navigation}) {
             <Pressable style={styles.button} onPress= {() => navigation.navigate('Ustawienia')}>
                 <Text style={styles.text_button}>Ustawienia</Text>
             </Pressable>
+            <Pressable style={styles.button} onPress = {() => navigation.navigate("Mapa")}>
+                <Text style={styles.text_button}>Mapa Restauracji</Text>
+            </Pressable>
             <Pressable style={styles.button} onPress = {() => navigation.navigate("Login")}>
                 <Text style={styles.text_button}>Wyloguj</Text>
             </Pressable>
+
         </View>
     );
 }
@@ -422,18 +433,123 @@ const UstawieniaScreen = ({ navigation}) => {
         }
     };
     return (
-        <View style={styles.container}>
-            <View style={styles.contentContainer}>
-                <Text style={styles.title}>Twoja aktualna lokalizacja</Text>
+            <View style={styles.container}>
+                <View style={styles.contentContainer}>
+                    <Text style={styles.title}>Twoja aktualna lokalizacja</Text>
+                </View>
+                <Text style={styles.text}>{displayCurrentAddress}</Text>
             </View>
-            <Text style={styles.text}>{displayCurrentAddress}</Text>
-        </View>
+        );
+}
+
+
+const MapaScreen = () => {
+    return (
+        <SafeAreaView style={{flex:1}}>
+            <MapView
+                style={styles.flex}
+                initialRegion={{
+                    latitude: 50.87033,
+                    longitude: 20.62752,
+                    latitudeDelta: 0.09,
+                    longitudeDelta: 0.04
+                }}>
+                <Marker
+                    description="John Burg"
+                    coordinate={{latitude: 50.87135, longitude: 20.62453}} >
+                <Image
+                    style={styles.markerImage}
+                    source={require("./assets/mark.png")} />
+                </Marker>
+                <Marker
+                    title="Bó burgers"
+                    description="Burgery"
+                    coordinate={{latitude: 50.87330, longitude: 20.62952}} >
+                    <Image
+                        style={styles.markerImage}
+                        source={require("./assets/mark.png")} />
+                </Marker>
+                <Marker
+                    description="Mc Donalds"
+                    coordinate={{latitude: 50.87225, longitude: 20.62840}} >
+                    <Image
+                        style={styles.markerImage}
+                        source={require("./assets/mark.png")} />
+                </Marker>
+                <Marker
+                    description="KFC"
+                    coordinate={{latitude: 50.87120, longitude: 20.62545}} >
+                    <Image
+                        style={styles.markerImage}
+                        source={require("./assets/mark.png")} />
+                </Marker>
+                <Marker
+                    description="Burger King"
+                    coordinate={{latitude: 50.87410, longitude: 20.62640}} >
+                    <Image
+                        style={styles.markerImage}
+                        source={require("./assets/mark.png")} />
+                </Marker>
+            </MapView>
+        </SafeAreaView>
     );
 }
 
+const ZamowScreen = ({}) => {
+    const [text1, onChangeText1] = React.useState(null);
+    const [text2, onChangeText2] = React.useState(null);
+    const [text3, onChangeText3] = React.useState(null);
+    const [text4, onChangeText4] = React.useState(null);
+    const [text5, onChangeText5] = React.useState(null);
+    return (
+        <SafeAreaView style = {styles.container}>
+            <TextInput
+                style={styles.input}
+                onChangeText={onChangeText1}
+                value={text1}
+                placeholder="Imie"
+                placeholderTextColor= '#BA2C73'
+            />
+            <TextInput
+                style={styles.input}
+                onChangeText={onChangeText2}
+                value={text2}
+                placeholder="Nazwisko"
+                placeholderTextColor= '#BA2C73'
+            />
+            <TextInput
+                style={styles.input}
+                onChangeText={onChangeText3}
+                value={text3}
+                placeholder="Adres"
+                placeholderTextColor= '#BA2C73'
+            />
+            <TextInput
+                style={styles.input}
+                onChangeText={onChangeText4}
+                value={text4}
+                placeholder="Kod Pocztowy"
+                placeholderTextColor= '#BA2C73'
+            />
+            <TextInput
+                style={styles.input}
+                onChangeText={onChangeText5}
+                value={text5}
+                placeholder="Numer telefonu"
+                placeholderTextColor= '#BA2C73'
+            />
+            <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', "Imię: "+text1 + "\n" +"Nazwisko: "+ text2 + "\n" +"Adres: "+ text3 + "\n" + "Kod Pocztowy: "+text4 + "\n" + "Numer Telefonu: "+text5)}>
+                <Text style={styles.text_button}>Zamów</Text>
+            </Pressable>
+        </SafeAreaView>
+
+    );
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////
 
-const PotrawaScreen = ({route}) => {
+const PotrawaScreen = ({route, navigation}) => {
     const {itemId} = route.params;
     const [selectedValue, setSelectedValue] = useState("1");
     if(itemId === 6) {
@@ -468,7 +584,7 @@ const PotrawaScreen = ({route}) => {
                         <Picker.Item label="6" value="6" />
                     </Picker>
                 </View>
-                <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                     <Text style={styles.text_button}>Zamów</Text>
                 </Pressable>
             </View>
@@ -507,7 +623,7 @@ const PotrawaScreen = ({route}) => {
                         <Picker.Item label="6" value="6" />
                     </Picker>
                 </View>
-                <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                     <Text style={styles.text_button}>Zamów</Text>
                 </Pressable>
             </View>
@@ -545,7 +661,7 @@ const PotrawaScreen = ({route}) => {
                         <Picker.Item label="6" value="6" />
                     </Picker>
                 </View>
-                <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                     <Text style={styles.text_button}>Zamów</Text>
                 </Pressable>
             </View>
@@ -582,7 +698,7 @@ const PotrawaScreen = ({route}) => {
                         <Picker.Item label="6" value="6" />
                     </Picker>
                 </View>
-                <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                     <Text style={styles.text_button}>Zamów</Text>
                 </Pressable>
             </View>
@@ -622,7 +738,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -661,7 +777,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -698,7 +814,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -736,7 +852,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -769,7 +885,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -805,7 +921,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -839,7 +955,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -872,7 +988,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -906,7 +1022,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -939,7 +1055,7 @@ const PotrawaScreen = ({route}) => {
                             <Picker.Item label="6" value="6" />
                         </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                         <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -977,7 +1093,7 @@ const PotrawaScreen = ({route}) => {
                         <Picker.Item label="6" value="6" />
                     </Picker>
                     </View>
-                    <Pressable style={styles.button} onPress={() => Alert.alert('Zamówione byczq', selectedValue)}>
+                    <Pressable style={styles.button} onPress = {() => navigation.navigate('Zamow', {itemId: itemId})}>
                             <Text style={styles.text_button}>Zamów</Text>
                     </Pressable>
                 </View>
@@ -986,9 +1102,20 @@ const PotrawaScreen = ({route}) => {
 }
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 
-
+function  Root() {
+    return (
+        <NavigationContainer>
+            <Tab.Navigator>
+                <Tab.Screen name="Menu" component={MenuScreen}/>
+                <Tab.Screen name="Restauracje" component={RestauracjeScreen}/>
+                <Tab.Screen name="Ustawienia" component={UstawieniaScreen}/>
+            </Tab.Navigator>
+        </NavigationContainer>
+    )
+}
 
 function App() {
     return (
@@ -1000,110 +1127,11 @@ function App() {
                 <Stack.Screen name="Ustawienia" component={ UstawieniaScreen } options = {{ title: 'Ustawienia', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
                 <Stack.Screen name="Jedzenie" component={ JedzenieScreen } options = {({ route }) => ({ title: route.params.name, headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, })}/>
                 <Stack.Screen name="Potrawa" component={ PotrawaScreen } options = {({ route }) => ({ title: route.params.name, headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, })}/>
+                <Stack.Screen name="Mapa" component={ MapaScreen } options = {{ title: 'Mapa', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+                <Stack.Screen name="Zamow" component={ ZamowScreen } options = {{ title: 'Zamówienie', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-    itemStyle: {
-        padding: 30,
-        fontSize: 20,
-        color: '#BA2C73',
-        width: '100%',
-    },
-    input: {
-        height: 60,
-        width: 225,
-        margin: 20,
-        borderWidth: 2,
-        borderColor: '#BA2C73',
-        color: '#BA2C73',
-        padding: 10,
-    },
-    logo: {
-        flex: 5,
-        height: 70,
-        resizeMode: 'contain',
-    },
-    nazwa: {
-        flex: 1,
-        fontSize: 30,
-        margin: 0,
-        padding: 0,
-        color: '#BA2C73',
-    },
-    opis: {
-        flex: 0.5,
-        color: '#BA2C73',
-    },
-    list: {
-        width: 160,
-        alignItems: "center",
-        color: '#BA2C73',
-    },
-    picker: {
-        flex: 0.7,
-        alignItems: "center",
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: '#BA2C73',
-        borderRadius: 4,
-    },
-
-    ilosc: {
-        flex: 0.5,
-        color: '#BA2C73',
-        fontSize: 20,
-    },
-
-    container: {
-        flex: 1,
-        backgroundColor: '#282F44',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-    },
-    contentContainer: {
-        paddingHorizontal: 20,
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: '700',
-        color: '#BA2C73',
-        paddingBottom: 10,
-    },
-    text: {
-        fontSize: 20,
-        fontWeight: '400',
-        color: '#BA2C73',
-    },
-
-    text_button: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: '#282F44',
-    },
-
-    button: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
-        elevation: 3,
-        backgroundColor: '#BA2C73',
-        margin: 20,
-    },
-    list_menu: {
-        flex:1,
-        backgroundColor: '#282F44',
-        justifyContent: 'center',
-        width: '100%',
-    },
-});
 
 export default App;
