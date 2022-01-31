@@ -5611,10 +5611,10 @@
   "resolved" "https://registry.npmjs.org/expo-application/-/expo-application-4.0.1.tgz"
   "version" "4.0.1"
 
-"expo-asset@~8.4.5":
-  "integrity" "sha512-4E+VzFdgSjeCC+x80VuL+moY04U19SRV6vrL8DekQSyPbwkNR1QdvSx/7O7XTOspB9duwebQ1ue7JHFWOwyaMQ=="
-  "resolved" "https://registry.npmjs.org/expo-asset/-/expo-asset-8.4.5.tgz"
-  "version" "8.4.5"
+"expo-asset@~8.4.6":
+  "integrity" "sha512-Kpzcmmf1lceHnZkAdJOvq7l7SU/hCL59vAj2xUZS66U6lFkUf7LNEA/NzILA56loCd4cka5ShYlWs+BMchyFDQ=="
+  "resolved" "https://registry.npmjs.org/expo-asset/-/expo-asset-8.4.6.tgz"
+  "version" "8.4.6"
   dependencies:
     "blueimp-md5" "^2.10.0"
     "invariant" "^2.2.4"
@@ -5738,10 +5738,10 @@
     "find-up" "^5.0.0"
     "fs-extra" "^9.1.0"
 
-"expo-modules-autolinking@0.5.2":
-  "integrity" "sha512-0mh9XpU8smGaZYT/D/lkGoYRw+gwUrUZs/LiHH7Z7vlUS6jhjvM13Vi2PgfdHjMuOgHy9GjqRrIoDsjuzjfnGQ=="
-  "resolved" "https://registry.npmjs.org/expo-modules-autolinking/-/expo-modules-autolinking-0.5.2.tgz"
-  "version" "0.5.2"
+"expo-modules-autolinking@0.5.5":
+  "integrity" "sha512-bILEG0Fg+ZhIhdEaShHzsEN1WC0hUmXJ5Kcd4cd+8rVk1Ead9vRZxA/yLx1cNBDCOwMe0GAMrhF7TKT+A1P+YA=="
+  "resolved" "https://registry.npmjs.org/expo-modules-autolinking/-/expo-modules-autolinking-0.5.5.tgz"
+  "version" "0.5.5"
   dependencies:
     "chalk" "^4.1.0"
     "commander" "^7.2.0"
@@ -5749,10 +5749,10 @@
     "find-up" "^5.0.0"
     "fs-extra" "^9.1.0"
 
-"expo-modules-core@0.6.3":
-  "integrity" "sha512-VLVQ6mK9rQHdcV+dn2keXsnDGR8OehUHkSAeZ88e5N8j1zjBo/9SI2/R7v3jBj+1Adg/wmVc5vyJzqnj2hlM2w=="
-  "resolved" "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-0.6.3.tgz"
-  "version" "0.6.3"
+"expo-modules-core@0.6.4":
+  "integrity" "sha512-I5MvSZHjww4Jfvob/woCbI0ZLZIUBmhoiLeZsMJoWJuWa8QmtxXjI+4eRjaDB7+RxNVhrnVcmRjQPYG/5HepVg=="
+  "resolved" "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-0.6.4.tgz"
+  "version" "0.6.4"
   dependencies:
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
@@ -5774,9 +5774,9 @@
   "version" "1.2.0"
 
 "expo@*", "expo@~44.0.0":
-  "integrity" "sha512-r3UXg8d2ypcK2I8ds5r9WP6luOLKH4tTqtdgOS+rQt3jpMpkF89VRnNB/Ux3GnzxHnxIHcEmTYBmfoI3qA4abg=="
-  "resolved" "https://registry.npmjs.org/expo/-/expo-44.0.1.tgz"
-  "version" "44.0.1"
+  "integrity" "sha512-QNQjUb+Rve1r1wUjs2fSx3JVxAVtcmqWZgS+izCLFovAoX6bZ1UUkQBUkVP9PNfimnZ11EDFG4243E0yxtmuuA=="
+  "resolved" "https://registry.npmjs.org/expo/-/expo-44.0.5.tgz"
+  "version" "44.0.5"
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@expo/metro-config" "~0.2.6"
@@ -5784,13 +5784,13 @@
     "babel-preset-expo" "~9.0.2"
     "cross-spawn" "^6.0.5"
     "expo-application" "~4.0.1"
-    "expo-asset" "~8.4.5"
+    "expo-asset" "~8.4.6"
     "expo-constants" "~13.0.0"
     "expo-file-system" "~13.1.0"
     "expo-font" "~10.0.4"
     "expo-keep-awake" "~10.0.1"
-    "expo-modules-autolinking" "0.5.2"
-    "expo-modules-core" "0.6.3"
+    "expo-modules-autolinking" "0.5.5"
+    "expo-modules-core" "0.6.4"
     "fbemitter" "^2.1.1"
     "invariant" "^2.2.4"
     "md5-file" "^3.2.3"
@@ -10861,7 +10861,7 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
   "version" "0.4.3"
 
-"react@*", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@^17.0.0", "react@>= 16.0 || < 18.0", "react@>=16.0", "react@>=16.3.0", "react@>=17.0.1", "react@16 || 17", "react@17.0.1":
+"react@*", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@^17.0.0", "react@^17.0.1", "react@>= 16.0 || < 18.0", "react@>=16.0", "react@>=16.3.0", "react@>=17.0.1", "react@16 || 17", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"

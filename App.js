@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { Image, StatusBar, FlatList, SafeAreaView, TextInput, Text, View, Alert, Pressable  } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Picker} from '@react-native-picker/picker';
 import * as Location from 'expo-location';
 import {styles} from "./styles";
 import MapView, {Marker} from 'react-native-maps';
-
-
 
 const STYLES = ['default', 'dark-content', 'light-content'];
 const TRANSITIONS = ['fade', 'slide', 'none'];
@@ -455,7 +453,8 @@ const MapaScreen = () => {
                     longitudeDelta: 0.04
                 }}>
                 <Marker
-                    description="John Burg"
+                    title="John Burg"
+                    description="Burgery"
                     coordinate={{latitude: 50.87135, longitude: 20.62453}} >
                 <Image
                     style={styles.markerImage}
@@ -470,21 +469,24 @@ const MapaScreen = () => {
                         source={require("./assets/mark.png")} />
                 </Marker>
                 <Marker
-                    description="Mc Donalds"
+                    title="Mc Donalds"
+                    description="Fast food"
                     coordinate={{latitude: 50.87225, longitude: 20.62840}} >
                     <Image
                         style={styles.markerImage}
                         source={require("./assets/mark.png")} />
                 </Marker>
                 <Marker
-                    description="KFC"
+                    title="KFC"
+                    description="Fast food"
                     coordinate={{latitude: 50.87120, longitude: 20.62545}} >
                     <Image
                         style={styles.markerImage}
                         source={require("./assets/mark.png")} />
                 </Marker>
                 <Marker
-                    description="Burger King"
+                    title="Burger King"
+                    description="Fast food"
                     coordinate={{latitude: 50.87410, longitude: 20.62640}} >
                     <Image
                         style={styles.markerImage}
@@ -546,6 +548,14 @@ const ZamowScreen = ({}) => {
     );
 }
 
+const KuponyScreen = ({}) => {
+    return (
+        <SafeAreaView style = {styles.container}>
+            <Text style={styles.text}> KUPONY </Text>
+        </SafeAreaView>
+
+    );
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -1101,37 +1111,60 @@ const PotrawaScreen = ({route, navigation}) => {
         }
 }
 
-const Stack = createNativeStackNavigator();
+//const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
+const LoginStack = createStackNavigator();
+const MenuStack = createStackNavigator();
+const KuponyStack = createStackNavigator();
 
 function  Root() {
     return (
-        <NavigationContainer>
-            <Tab.Navigator>
-                <Tab.Screen name="Menu" component={MenuScreen}/>
-                <Tab.Screen name="Restauracje" component={RestauracjeScreen}/>
-                <Tab.Screen name="Ustawienia" component={UstawieniaScreen}/>
-            </Tab.Navigator>
-        </NavigationContainer>
-    )
-}
 
-function App() {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Login" component={ LoginScreen } options = {{ title: 'Kucharek', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'},}}/>
-                <Stack.Screen name="Menu" component={ MenuScreen } options = {{ title: 'Menu', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
-                <Stack.Screen name="Restauracje" component={ RestauracjeScreen } options = {{ title: 'Restauracje', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
-                <Stack.Screen name="Ustawienia" component={ UstawieniaScreen } options = {{ title: 'Ustawienia', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
-                <Stack.Screen name="Jedzenie" component={ JedzenieScreen } options = {({ route }) => ({ title: route.params.name, headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, })}/>
-                <Stack.Screen name="Potrawa" component={ PotrawaScreen } options = {({ route }) => ({ title: route.params.name, headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, })}/>
-                <Stack.Screen name="Mapa" component={ MapaScreen } options = {{ title: 'Mapa', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
-                <Stack.Screen name="Zamow" component={ ZamowScreen } options = {{ title: 'Zamówienie', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
-            </Stack.Navigator>
-        </NavigationContainer>
+            <Tab.Navigator screenOptions={{ headerShown: true }} tabBarOptions={{
+                activeTintColor: '#282F44',
+                inactiveTintColor: '#BA2C73',
+                activeBackgroundColor: '#BA2C73',
+                inactiveBackgroundColor: '#282F44',
+                showIcon: true,
+            }} >
+                <Tab.Screen name="Menu" component={MenuStackScreen} options={{headerShown: false, tabBarIcon: () => (<Image source={require("./assets/home.png")} style={{width: 20, height: 20}}/>)}}/>
+                <Tab.Screen name="Kupony" component={KuponyStackScreen} options={{headerShown: false, tabBarIcon: () => (<Image source={require("./assets/cupon.png")} style={{width: 45, height: 25}}/>)}}/>
+            </Tab.Navigator>
     );
 }
 
-export default App;
+function MenuStackScreen() {
+    return(
+            <MenuStack.Navigator>
+                <MenuStack.Screen name="Menu" component={ MenuScreen } options = {{ title: 'Menu', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+                <MenuStack.Screen name="Restauracje" component={ RestauracjeScreen } options = {{ title: 'Restauracje', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+                <MenuStack.Screen name="Ustawienia" component={ UstawieniaScreen } options = {{ title: 'Ustawienia', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+                <MenuStack.Screen name="Jedzenie" component={ JedzenieScreen } options = {({ route }) => ({ title: route.params.name, headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, })}/>
+                <MenuStack.Screen name="Potrawa" component={ PotrawaScreen } options = {({ route }) => ({ title: route.params.name, headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, })}/>
+                <MenuStack.Screen name="Mapa" component={ MapaScreen } options = {{ title: 'Mapa', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+                <MenuStack.Screen name="Zamow" component={ ZamowScreen } options = {{ title: 'Zamówienie', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+            </MenuStack.Navigator>
+    );
+}
+
+function KuponyStackScreen() {
+    return(
+        <KuponyStack.Navigator>
+            <KuponyStack.Screen name="Kupony" component={ KuponyScreen } options = {{ title: 'Kupony', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+        </KuponyStack.Navigator>
+    );
+}
+
+
+function LoginStackScreen() {
+    return(
+        <NavigationContainer>
+            <LoginStack.Navigator>
+                <LoginStack.Screen name="Login" component={ LoginScreen } options = {{ title: 'Kucharek', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'},}}/>
+                <LoginStack.Screen name="Menu" component={ Root } options = {{headerShown: false, title: 'Menu', headerTintColor: '#282F44', headerStyle: {backgroundColor: '#BA2C73'}, }}/>
+            </LoginStack.Navigator>
+            </NavigationContainer>
+    );
+}
+
+export default LoginStackScreen;
