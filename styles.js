@@ -100,9 +100,24 @@ export const styles = StyleSheet.create({
         margin: 20,
     },
     list_menu: {
-        flex:1,
+        flex: 1,
         backgroundColor: '#282F44',
         justifyContent: 'center',
         width: '100%',
+    },
+    item: {
+        flex: 1,
+        justifyContent: 'center',
+        width: '100%',
+        color: '#FFFFFF',
+
+    },
+    item_list: {
+        flex: 1,
+        fontSize: 20,
+        justifyContent: 'center',
+        width: '100%',
+        backgroundColor: '#1f2536',
+        color: '#BA2C73',
     },
 });

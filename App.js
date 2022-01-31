@@ -1,5 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import { Image, StatusBar, FlatList, SafeAreaView, TextInput, Text, View, Alert, Pressable  } from 'react-native';
+import {
+    Image,
+    StatusBar,
+    FlatList,
+    SafeAreaView,
+    TextInput,
+    Text,
+    View,
+    Alert,
+    Pressable,
+    SectionList
+} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -79,7 +90,7 @@ const RestauracjeScreen = ({ navigation}) => {
     let listViewRef;
       const [dataSource] = useState([
         { id: 1, title: 'John burg'},
-        { id: 2, title: 'Bó' },
+        { id: 2, title: 'Bó burgers' },
         { id: 3, title: 'MC Donalds' },
         { id: 4, title: 'KFC' },
         { id: 5, title: 'Burger King' },
@@ -550,9 +561,18 @@ const ZamowScreen = ({}) => {
 
 const KuponyScreen = ({}) => {
     return (
-        <SafeAreaView style = {styles.container}>
-            <Text style={styles.text}> KUPONY </Text>
-        </SafeAreaView>
+        <View style={styles.list_menu}>
+            <SectionList
+                sections={[
+                    {title: 'Burgery', data: ['','Promocja 2 burgery w cenie 1! w Bó','', 'Stek we wtorki za 20 zł w John burg!','']},
+                    {title: 'Fast Food', data: ['','Kubełek classic wraz z Coca Colą za 20zł!', '', 'Big mac we wtorki za 10 zł w Mc Donalds']},
+                ]}
+                renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+                renderSectionHeader={({section}) => <Text style={styles.item_list}>{section.title}</Text>}
+                keyExtractor={(item, index) => index}
+            />
+        </View>
+
 
     );
 }
